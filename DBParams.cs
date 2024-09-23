@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using OmerEisGlobal;
+using OmerEisCommon;
 using System.Text.Json;
 
 namespace OmerEisGlobal {
@@ -74,7 +74,7 @@ namespace OmerEisGlobal {
 		public string GetConnectionString () {
 			string strConn = "";
 			try {
-				strConn = string.Format("Server='{0}'; database='{1}'; UID='{2}'; password='{3}'", Server, Database, Username, Password);
+				strConn = string.Format("Server='{0}'; database='{1}'; UID='{2}'; password='{3}';", Server, Database, Username, Password);
 			}
 			catch (Exception e) {
 				Console.WriteLine ();
