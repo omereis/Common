@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Collections;
 using System.Globalization;
 //----------------------------------------------------------------------------
-namespace OmerEisGlobal {
+namespace OmerEisCommon {
 	public class TIniFile {
 		private string m_strFile;
 //----------------------------------------------------------------------------
