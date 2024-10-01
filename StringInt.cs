@@ -58,14 +58,20 @@ namespace OmerEisCommon {
 			return (Name);
 		}
 //------------------------------------------------------------------------------
-		public override bool Equals(object? obj) {
+		public override bool Equals(object o) {
 			bool fEq = false;
 
-			if (obj == null) {
-				TStringInt other = (TStringInt) obj;
-				if (other.ID == ID)
-					if (String.Compare (other.Name, Name, StringComparison.OrdinalIgnoreCase) == 0)
-						fEq = true;
+			if (o != null) {
+				try {
+					TStringInt other = (TStringInt) o;
+					if (other.ID == ID)
+						if (String.Compare (other.Name, Name, StringComparison.OrdinalIgnoreCase) == 0)
+							fEq = true;
+				}
+				catch (Exception e){
+					string s = e.Message;
+					s += "";
+				}
 			}
 			return (fEq);
 		}
@@ -105,13 +111,14 @@ namespace OmerEisCommon {
 		}
 //------------------------------------------------------------------------------
 		public static string GetSqlInt (TStringIntListDB lst) {
-			string str;
+			string str="null";
 
-			if (lst != null)
-				str = lst.Items[0].ID.ToString();
-			else
-				str = "null";
-			str = String.Format ("'{0}'", str);
+			if (lst != null) {
+				if (lst.Items != null) {
+					if (lst.Items[0].ID > 0)
+						str = lst.Items[0].ID.ToString();
+				}
+			}
 			return (str);
 		}
 //------------------------------------------------------------------------------
@@ -170,7 +177,12 @@ namespace OmerEisCommon {
 			try {
 				si.Clear();
 				si.ID = TMisc.ReadIntField(reader, m_strFieldId);
-				si.Name = reader.GetString(m_strFieldName);
+				try {
+					si.Name = reader.GetString(m_strFieldName);
+				}
+				catch {
+					si.Name = "";
+				}
 				fLoad = true;
 			}
 			catch (Exception e) {
@@ -331,6 +343,17 @@ namespace OmerEisCommon {
 			Items = new TStringInt[al.Count];
 			for (n=0 ; n < al.Count ; n++)
 				Items[n] = (TStringInt) al[n];
+		}
+//------------------------------------------------------------------------------
+		public int IndexOfID (int id) {
+			int nFound=-1, n;
+
+			if (Items != null) {
+				for (n=0 ; (n < Items.Length) && (nFound < 0) ; n++)
+					if (id == Items[n].ID)
+						nFound = n;
+			}
+			return (nFound);
 		}
 //------------------------------------------------------------------------------
 	}
