@@ -233,5 +233,15 @@ namespace OmerEisCommon {
 			return (strValue);
 		}
 //------------------------------------------------------------------------------
+		public static int CompareDates (DateTime? dt1, DateTime? dt2) {
+			int ret;
+
+			if ((dt1 == null) || (dt2 == null))
+				ret = 0;
+			else
+				ret = DateTime.Compare ((DateTime) dt1, (DateTime) dt2);
+			return (ret);
+		}
+//------------------------------------------------------------------------------
 	}
 }
