@@ -2,8 +2,7 @@
 |                               DBParams.cs                                    |
 \******************************************************************************/
 
-
-using Mysqlx.Crud;
+//using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +18,14 @@ namespace OmerEisGlobal {
 		private string m_strDatabase;
 		private string m_strUsername;
 		private string m_strPassword;
+		private string m_strErr;
 		TIniFile m_ini;
 
 		public string Server {get{return (m_strServer);}set{m_strServer=value;}}
 		public string Database {get{return (m_strDatabase);}set{m_strDatabase=value;}}
 		public string Username {get{return (m_strUsername);}set{m_strUsername=value;}}
 		public string Password {get{return (m_strPassword);}set{m_strPassword=value;}}
+		public string ErrorString {get{return (m_strErr);}}
 //------------------------------------------------------------------------------
 		public TDBParams() {
 			Clear();
@@ -81,5 +82,23 @@ namespace OmerEisGlobal {
 			}
 			return (strConn);
 		}
+//------------------------------------------------------------------------------
+		public bool LoadFromINI (string strIni) {
+			bool fLoad;
+
+			try {
+				fLoad = true;
+				TIniFile ini = new TIniFile (strIni);
+				string str = ini.ReadString("Database", "main");
+				if (str.Length > 0)
+					fLoad = FromJson (str);
+			}
+			catch (Exception ex) {
+				fLoad = false;
+				m_strErr = ex.Message;
+			}
+			return (fLoad);
+		}
 	}
+
 }

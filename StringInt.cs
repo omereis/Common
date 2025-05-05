@@ -87,9 +87,9 @@ namespace OmerEisCommon {
 		protected string m_strFieldName;
 		protected string m_strTitle;
 //------------------------------------------------------------------------------
-		protected string Table {get{return (m_strTable);}}
-		protected string FieldID{get{return (m_strFieldId);}}
-		protected string FieldName{get{return (m_strFieldName);}}
+		public string Table {get{return (m_strTable);}}
+		public string FieldID{get{return (m_strFieldId);}}
+		public string FieldName{get{return (m_strFieldName);}}
 		public String Title {get{return (m_strTitle);}}
 //------------------------------------------------------------------------------
 		public TStringInt[] Items {get{return (m_aItems);}set{m_aItems=value;}}
