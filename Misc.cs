@@ -459,14 +459,58 @@ namespace OmerEisCommon {
 			return (strSet);
 		}
 //-----------------------------------------------------------------------------
+		public static string AppDateTime (DateTime? dt) {
+			string str = AppDate (dt) + ", " + AppTime(dt);
+			return (str);
+		}
+//-----------------------------------------------------------------------------
+		public static string AppDate (DateTime? dt) {
+			string str = "";
+			if (dt != null)
+				str = String.Format ("{0}/{1}/{2}", dt.Value.Day, dt.Value.Month, dt.Value.Year);
+			return (str);
+		}
+//-----------------------------------------------------------------------------
 		public static string AppTime (DateTime? dt) {
-			string str = String.Format ("{0}/{1}/{2}", dt.Value.Day, dt.Value.Month, dt.Value.Year);
+			string str = "";
+			if (dt != null)
+				str = String.Format ("{0}:{1}:{2}", dt.Value.Hour, dt.Value.Minute, dt.Value.Second);
 			return (str);
 		}
 //-----------------------------------------------------------------------------
 		public static string IntFormat (int nValue) {
 			string str = String.Format ("{0:#,0}", nValue);
 			return (str);
+		}
+//----------------------------------------------------------------------------
+		public static bool SaveToCsv (string strFileName, ArrayList al) {
+			bool fWrite;
+			StreamWriter writer = null;
+			string str="";
+
+			try {
+				writer = new StreamWriter(strFileName);
+				for (int nLines=0 ; nLines < al.Count ; nLines++) {
+					str = "";
+					string[] astr = (string[]) al[nLines];
+					for (int nCols=0 ; nCols < astr.Length ; nCols++) {
+						str += astr[nCols];
+						if (nCols < astr.Length - 1)
+							str += ",";
+					}
+					writer.WriteLine(str);
+				}
+				fWrite = true;
+			}
+			catch (Exception ex) {
+				Console.WriteLine (ex.Message);
+				fWrite = false;
+			}
+			finally {
+				if (writer != null)
+					writer.Close();
+			}
+			return (fWrite);
 		}
 	}
 }
