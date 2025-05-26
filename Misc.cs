@@ -291,6 +291,19 @@ namespace OmerEisCommon {
 			return (nValue);
 		}
 //-----------------------------------------------------------------------------
+		public static bool IsValidDouble (string strValue) {
+			bool fValid;
+
+			try {
+				double dValue = Convert.ToDouble (strValue);
+				fValid = true;
+			}
+			catch (Exception) {
+				fValid = false;
+			}
+			return (fValid);
+		}
+//-----------------------------------------------------------------------------
 		public static double ToDoubleDef (string strValue, double dDef=0) {
 			double dValue=0;
 			try {
@@ -347,6 +360,16 @@ namespace OmerEisCommon {
 			}
 			else
 				str = "";
+			return (str);
+		}
+//------------------------------------------------------------------------------
+		public static string GetSqlString (DateTime? dt) {
+			string str;
+
+			if (dt == null)
+				str = "null";
+			else
+				str = "'" + dt.Value.ToString("yyyy-MM-dd HH:mm:ss") + "'";
 			return (str);
 		}
 //------------------------------------------------------------------------------
