@@ -207,6 +207,20 @@ namespace OmerEisCommon {
 		}
 #else
 //------------------------------------------------------------------------------
+		public static uint ReadUIntField (SqlDataReader reader, string strField, ref string strErr) {
+			uint uiValue=0;
+
+			try {
+				string strValue = ReadTextField (reader, strField, ref strErr);
+				uiValue = Convert.ToUInt32(strValue);
+			}
+			catch (Exception ex) {
+				strErr = ex.Message;
+				uiValue = 0;
+			}
+			return (uiValue);
+		}
+//------------------------------------------------------------------------------
 		public static int ReadIntField (SqlDataReader reader, string strField, ref string strErr) {
 			int nValue=0;
 
@@ -273,6 +287,21 @@ namespace OmerEisCommon {
 				nValue = Convert.ToInt32(obj);
 			}
 			catch {
+				nValue = nDef;
+			}
+			return (nValue);
+		}
+//-----------------------------------------------------------------------------
+		public static uint ToUIntDef (string strValue, uint nDef=0) {
+			uint nValue=0;
+			try {
+				if (strValue != null)
+					nValue = Convert.ToUInt32 (strValue);
+				else
+					nValue = nDef;
+			}
+			catch (Exception e) {
+				//m_strErr = e.Message;
 				nValue = nDef;
 			}
 			return (nValue);
